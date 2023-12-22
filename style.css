@@ -1,0 +1,73 @@
+body {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    background-image: url(./assets/marble\ background.jpeg);
+    background-size: 100%;
+    height: 95vh;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 95vh;
+}
+
+#header {
+    display: flex !important;
+    justify-content: space-evenly !important;
+    align-items: center !important;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+.date {
+    width: 96px;
+    text-align: center;
+}
+
+.show {
+    width: 111px;
+}
+
+.hidden {
+    display: none;
+}
+
+.ideaContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+button {
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    width: fit-content;
+    height: 50px;
+    margin: 0px auto;
+}
+
+/* .song {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+} */
+
+.description {
+    font-weight: bold;
+    font-size: 40px;
+    margin: 0 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.description-hide {
+    display: none;
+}
