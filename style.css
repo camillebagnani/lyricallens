@@ -2,7 +2,7 @@ body {
     text-align: center;
     font-family: 'Playfair Display', serif;
     background-image: url(./assets/marble\ background.jpeg);
-    background-size: 100%;
+    background-size: 120%;
     height: 95vh;
 }
 
@@ -20,7 +20,7 @@ body {
 }
 
 h1 {
-    font-size: 50px;
+    font-size: 30px;
 }
 
 .date {
@@ -48,26 +48,5 @@ button {
     font-weight: bold;
     width: fit-content;
     height: 50px;
-    margin: 0px auto;
-}
-
-/* .song {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-} */
-
-.description {
-    font-weight: bold;
-    font-size: 40px;
-    margin: 0 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.description-hide {
-    display: none;
+    margin: 30px auto 0px auto;
 }
