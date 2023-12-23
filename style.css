@@ -50,3 +50,8 @@ button {
     height: 50px;
     margin: 30px auto 0px auto;
 }
+
+@media screen and (max-width: 393px) {
+    #container {height: 85vh;
+    }
+}
