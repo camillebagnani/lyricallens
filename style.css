@@ -52,6 +52,7 @@ button {
 }
 
 @media screen and (max-width: 393px) {
-    #container {height: 85vh;
+    #container {
+        height: 85vh;
     }
 }

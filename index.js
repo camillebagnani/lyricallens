@@ -3,11 +3,12 @@ const pokemonContainer = $('.pokemonContainer')
 const emptyPokemonDiv = $('.show')
 const description = $('.description')
 const button = $('.button')
-const backButton = $('.backButton')
 const today = dayjs();
 
+// Adds the date to the HTML element with class 'date' using dayjs()
 $('.date').text(today.format('MMM D, YYYY'));
 
+// Class to make the daily prompts
 class DailyPrompt {
     constructor(prompt, link) {
         this.prompt = prompt;
@@ -15,6 +16,7 @@ class DailyPrompt {
     }
 }
 
+// Daily prompts including photo prompt and link to Spotify embed
 const ideaOne = new DailyPrompt('"Well-kept"', '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6szkoIUdwt8BOzOOeaM0f2?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>');
 const ideaTwo = new DailyPrompt('"Technicolored"', '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7I1IwNGzIkv9Nlh8bQc5Xz?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>');
 const ideaThree = new DailyPrompt('"Slow (Lento)"', '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4JFZ0ilVg7CenXhnDcJb4u?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>');
@@ -48,45 +50,48 @@ const ideaThirty = new DailyPrompt('"Like clockwork"', '<iframe style="border-ra
 const ideaThirtyOne = new DailyPrompt('"Things that make sounds"', '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5hc71nKsUgtwQ3z52KEKQk?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>');
 const ideaThirtyTwo = new DailyPrompt('"Here we are"', '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/769PAogOgq1KurfwLjWj2J?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>');
 
+// Array that holds all of the DailyPrompt classes
+// Created so we can advance through each index on button click
 const ideasArray = [ideaOne, ideaTwo, ideaThree, ideaFour, ideaFive, ideaSix, ideaSeven, ideaEight, ideaNine, ideaTen, ideaEleven, ideaTwelve, ideaThirteen, ideaFourteen, ideaFifteen, ideaSixteen, ideaSeventeen, ideaEighteen, ideaNineteen, ideaTwenty, ideaTwentyOne, ideaTwentyTwo, ideaTwentyThree, ideaTwentyFour, ideaTwentyFive, ideaTwentySix, ideaTwentySeven, ideaTwentyEight, ideaTwentyNine, ideaThirty, ideaThirtyOne, ideaThirtyTwo];
 
+// Text that will appear on load, later to be replaced with the DailyPrompt class
 ideaContainer.html(`A photography prompt generator based on song lyrics.`)
 
+// Gives functionality to the 'Advance' button so that it updates HTML and moves index forward 1
 button.on('click', function () {
+    updateHTML();
     updateIndex('forward');
-    updateHTML();
 })
 
-backButton.on('click', function () {
-    updateIndex('back');
-    updateHTML();
-})
-
+// Index starts at zero to capture the DailyPrompt at Index 0
 let index = 0;
 
+// Updates index based on direction, in this case, forward
 function updateIndex(direction) {
+    // Future development to add a 'Back' button
     if (direction === 'back') {
         index = (index > 0) ? index - 1 : ideasArray.length - 1;
+        // If the direction is forward, as long as the index is less than the length of the ideasArray - 1, advance 1, otherwise index is 0 (aka start over)
     } else if (direction === 'forward') {
         index = (index < ideasArray.length - 1) ? index + 1 : 0;
     }
-    console.log(index)
 }
 
+// Updates the HTML content based on the index
 function updateHTML() {
     ideaContainer.html(`
     <div class="prompt">${ideasArray[index].prompt}</div>
     <div class="song">${ideasArray[index].link}</div>
     `)
-
+    // Removes the emptyPokemonDiv placeholder that kept the title centered
     emptyPokemonDiv.removeClass('show').addClass('hidden')
-    backButton.removeClass('hidden')
 }
 
 const randomPokemon = (apiObj) => {
     const { url, type, name } = apiObj;
     const apiUrl = `${url}${type}/${name}`;
 
+    // Once fetch request is accepted, it uses the data to show the pokemonContainer and give the HTML content a random Pokemon sprite
     fetch(apiUrl)
         .then((raw_data) => raw_data.json())
         .then((data) => {
@@ -99,6 +104,7 @@ const randomPokemon = (apiObj) => {
         })
 }
 
+// Dynamically makes URL based on the value of the Randomize function
 function makeURL(value) {
     const apiObj = {
         url: 'https://pokeapi.co/api/v2/',
@@ -108,59 +114,19 @@ function makeURL(value) {
     return apiObj
 }
 
+// Math to get a random number 
 function getRandomInt(min, max) {
     var randomInt = Math.floor(Math.random() * (max - min) + min);
     // console.log(randomInt);
     return randomInt;
 }
 
+// Function to randomize first 5 generations of Pokemon
+// Calls the randomPokemon function with the apiObj equivalent to the random search value
 function Randomize() {
     const searchValue = getRandomInt(1, 649);
     randomPokemon(makeURL(searchValue));
 }
 
-button.on("click", Randomize)
-
-// button.on('click', function () {
-
-//     if (index < ideasArray.length) {
-//         ideaContainer.html(`
-//         <div class="prompt">${ideasArray[index].prompt}</div>
-//         <div class="song">${ideasArray[index].link}</div>
-//         `)
-//         index++
-//     } else {
-//         index = 0;
-//     }
-
-//     emptyPokemonDiv.removeClass('show').addClass('hidden')
-//     backButton.removeClass('hidden')
-
-// })
-
-// backButton.on('click', function () {
-//     if (index > 0) {
-//         index--;
-//         ideaContainer.html(`
-//             <div class="prompt">${ideasArray[index].prompt}</div>
-//             <div class="song">${ideasArray[index].link}</div>
-//         `);
-//     } else {
-//         // If at the beginning, loop to the end
-//         index = ideasArray.length - 1;
-//         ideaContainer.html(`
-//             <div class="prompt">${ideasArray[index].prompt}</div>
-//             <div class="song">${ideasArray[index].link}</div>
-//         `);
-//     }
-// })
-
-// backButton.on('click', function() {
-//     if (index > 0) {
-//         ideaContainer.html(`
-//         <div class="prompt">${ideasArray[index].prompt}</div>
-//         <div class="song">${ideasArray[index].link}</div>
-//         `)
-//         index--
-//     }
-// })
+// On click, the button uses the Randomize function, which completes the API functionality
+button.on("click", Randomize);
